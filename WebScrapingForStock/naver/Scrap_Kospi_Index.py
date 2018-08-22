@@ -8,8 +8,8 @@ conn = pyodbc.connect(Driver='{Microsoft Access Driver (*.mdb, *.accdb)}'
                       ,DBQ='C:\\Users\\SIDeok\\git\\WebscrapingForStock\\WebScrapingForStock\\ms_access\\StockDB.mdb')
 cs = conn.cursor()
 
-for i in range(1,523) :
-    pageCont = urllib.request.urlopen('https://finance.naver.com/sise/sise_index_day.nhn?code=KPI200&page=' + str(i));
+for i in range(1,1250) :
+    pageCont = urllib.request.urlopen('https://finance.naver.com/sise/sise_index_day.nhn?code=KOSPI&page=' + str(i));
     soup_m = BeautifulSoup(pageCont.read(), "html.parser");
     soup_tab = soup_m.find("table", {"class" : "type_1"});
     
@@ -21,7 +21,7 @@ for i in range(1,523) :
             date = j.contents[0];
             val = tdArray[idx+1].contents[0];
             print(str(i) + ", " + date.replace(".","") + " ,  " + val);
-            cs.execute("INSERT INTO TB_KOSPI200_INDEX VALUES('" + date.replace(".","-") + "'," + val.replace(",","") + ")")
+            cs.execute("INSERT INTO TB_KOSPI_INDEX VALUES('" + date.replace(".","-") + "'," + val.replace(",","") + ")")
         idx+=1;
         
 
