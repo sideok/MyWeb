@@ -1,18 +1,15 @@
 import urllib.request
 from bs4 import BeautifulSoup
 
-#ÁÖ½ÄÁ¤º¸¿¡¼­ ½ºÅ©·¡ÇÎ ÇÒ ÆäÀÌÁö ¸¸Å­ range¸¦ Á¤ÇØÁØ´Ù.
+#ì£¼ì‹ì •ë³´ í˜ì´ì§€ ìˆ«ìë§Œí¼ rangeë¥¼ ì •í•´ì¤€ë‹¤.
 for i in range(1,400) :
     pageCont = urllib.request.urlopen('https://finance.naver.com/sise/sise_index_day.nhn?code=KPI200&page=' + str(i));
     soup_m = BeautifulSoup(pageCont.read(), "html.parser");
     soup_tab = soup_m.find("table", {"class" : "type_1"});
     
-    #tr ÅÂ±×¸¦ ÀüºÎ´Ù ÀĞ¾î¿Â µÚ Index Á¤º¸°¡ ÀÖ´Â trµ¥ÀÌÅÍ¸¸ »Ì¾Æ³½´Ù.
+    #tríƒœê·¸ë¥¼ ì½ì–´ì˜¨ë’¤ dateê°€ ìˆëŠ” í•­ëª©ë§Œ ì²˜ë¦¬í•œë‹¤.
     for j in soup_tab.findAll("tr") : 
         if(j.td != None and j.td['class'][0] == 'date') :
             date = j.find("td",{"class" : "date"}).contents[0];
             val = j.find("td",{"class" : "number_1"}).contents[0];
             print(date.replace(".","/") + " ,  " + val);
-        else :
-           continue;
-    #print(soup.find_all("table"))
