@@ -18,11 +18,12 @@ list_cmp_cd = cs.execute('SELECT COMPANY_CODE FROM TB_COMPANY_INFO')
 arrCmpCd = list_cmp_cd.fetchall()
 
 for i in range(arrCmpCd.__len__() - 1, arrCmpCd.__len__()) :
+    arrInfo = []
     pageCont = urllib.request.urlopen('https://companyinfo.stock.naver.com/v1/company/ajax/cF1001.aspx?cmp_cd=' + arrCmpCd[i][0] + '&fin_typ=0&freq_typ=Y');
     soup_m = BeautifulSoup(pageCont.read(), "html.parser");
     soup_tab = soup_m.find("table", {"class" : "gHead01 all-width"});
     #print(soup_tab.findAll("th")[2].contents[0].strip())
-    print(soup_tab)
+    print(soup_tab.findAll("th"))
 
 
 #tr태그를 읽어온뒤 date가 있는 항목만 처리한다.
